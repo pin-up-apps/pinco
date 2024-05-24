@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "297439513391",
+    "project_id": "pinco-spa-webview",
+    "storage_bucket": "pinco-spa-webview.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297439513391:android:4f42c3a9eedbdd5a8a6fda",
+        "android_client_info": {
+          "package_name": "com.pinco.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy2PIOlcBOfZPN3CgneI-ryaZQ-OlmL-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
