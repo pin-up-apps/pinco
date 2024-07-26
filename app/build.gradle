@@ -22,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -65,6 +65,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation ("com.google.firebase:firebase-config:21.2.0")
 
-    implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation ("com.airbnb.android:lottie:6.4.0")
 
 }

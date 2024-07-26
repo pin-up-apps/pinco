@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <queries>
+        <!-- Explicit apps you know in advance about: -->
+        <package android:name="net.one97.paytm"/>
+        <package android:name="com.phonepe.app"/>
+        <package android:name="com.google.android.apps.nbu.paisa.user"/>
+        <package android:name="in.org.npci.upiapp"/>
+        <package android:name="in.amazon.mShop.android.shopping"/>
+        <package android:name="com.mobikwik_new"/>
+        <package android:name="com.axis.mobile"/>
+        <package android:name="com.snapwork.hdfc"/>
+        <package android:name="com.sbi.lotusintouch"/>
+        <package android:name="com.csam.icici.bank.imobile"/>
+        <package android:name="com.msf.kbank.mobile"/>
+        <package android:name="com.freecharge.android"/>
+        <package android:name="com.pockets.customer"/>
+        <package android:name="com.google.android.apps.nbu.paisa.user"/>
+    </queries>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,9 +30,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PincoSPAWebViewApp"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

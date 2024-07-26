@@ -3,6 +3,7 @@ package com.pinco.app.views
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -13,6 +14,7 @@ import android.view.WindowManager
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
@@ -120,63 +122,6 @@ class WebViewActivity : AppCompatActivity() {
                         super.onPageStarted(view, url, favicon)
                     }
 
-//                    @Deprecated("Deprecated in Java")
-//                    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-//                        Log.d("tabs1_url", url.toString())
-//
-//                        if (url!!.contains("tg:")) {
-//                            val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-//                            telegramIntent.setPackage("org.telegram.messenger")
-//                            return try {
-//                                startActivity(telegramIntent)
-//                                true
-//                            } catch (e: ActivityNotFoundException) {
-//
-//                                val customTabsIntent = CustomTabsIntent.Builder()
-////                                    .setToolbarColor(ContextCompat.getColor(this@WebViewActivity, R.color.status_bar_pin_up_color)) // Optional: set the toolbar color
-////                                    .addDefaultShareMenuItem() // Optional: add a default share button
-////                                    .setShowTitle(true) // Optional: show the title in the custom tab
-//                                    .build()
-//                                Log.d("tabs2_url", url)
-//                                // Launching the URL
-//                                customTabsIntent.launchUrl(this@WebViewActivity, Uri.parse("https://stackoverflow.com/"))
-//                                true
-//                            }
-//                        } else {
-//                            return false
-//                        }
-//
-//
-//
-////                        if (url != null && Uri.parse(url).host?.contains("pin-up") != true) {
-////                            Log.d("onPageLife", "overridedUrl " + url.toString())
-////
-////                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-////                            context?.startActivity(intent)
-////                            return true // Indicates that we're handling the URL loading
-////                        }
-////                        Log.d("onPageLife", "shouldOvveride " + url.toString())
-//
-//                        // Allow WebView to handle the URL
-//
-////
-////                        val url = URL(url.toString())
-////                        val host3 = url.host
-////                        Log.d("tags222", url.toString())
-////                        if (Uri.parse(url.toString()).host!!.contains("pin-up")) {
-////
-////                            Log.d("flow222", url.toString())
-////
-////                            // This is my web site, so do not override; let the WebView load the page.
-////                            return false;
-////                        }
-////                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString()))
-////                        startActivity(intent)
-////                        // Reject everything else.
-////
-////                        return true
-//
-//                    }
 
 
                     override fun shouldOverrideUrlLoading(
@@ -233,49 +178,11 @@ class WebViewActivity : AppCompatActivity() {
                         else {
                             Log.d("tabs1_request", "FALSE")
 
-                            return false
+                            return handleDeepLink(request.url.toString()) || super.shouldOverrideUrlLoading(view, request)
                         }
-//                        if (request.url != null && Uri.parse(request.url.toString()).host?.contains("pin-up") != true) {
-//                            Log.d("onPageLife", "overridedUrl "+ request.url.toString())
-//
-//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(request.url.toString()))
-//                            context?.startActivity(intent)
-//                            return true // Indicates that we're handling the URL loading
-//                        }
-//                        Log.d("onPageLife", "shouldOvveride "+request.url.toString())
 
-//                        return false // Allow WebView to handle the URL
                     }
 
-
-                    // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-                    // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-
-//                        return  if (request?.url.toString().contains("tg:") && isUriAvailable(requireContext(), request?.url.toString())) {
-//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString()))
-//                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                            requireActivity().startActivity(intent)
-//                            false
-//                        } else if (request?.url.toString().contains("t.me")) {
-//                            false
-//                        } else {
-//                            false
-//                        }
-//                        val url = request?.url.toString()
-//                        if (url.isEmpty()) {
-//                            return true
-//                        } else {
-//                            if (url.contains("tg:")){
-//                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-////                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                                requireActivity().startActivity(intent)
-//                            } else if (url.contains("instagram.com")){
-//                                return false
-//                            } else return !(url.contains("twitter.com") || url.contains("x.com"))
-//                        }
-//
-
-//                        return request!!.url.toString().contains("instagram.com") || request.url.toString().contains("twitter.com") || request.url.toString().contains("t.me")
 
 
                 },
@@ -298,21 +205,6 @@ class WebViewActivity : AppCompatActivity() {
         }
 
 
-//        when (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-//            Configuration.UI_MODE_NIGHT_YES -> {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    window.decorView.systemUiVisibility =View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                    window.statusBarColor = Color.BLACK
-//                }
-//            }
-//            Configuration.UI_MODE_NIGHT_NO -> {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    window.decorView.systemUiVisibility =View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//                    window.statusBarColor = Color.WHITE
-//                }
-//            }
-//            Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
-//        }
 
 
     }
@@ -333,5 +225,85 @@ class WebViewActivity : AppCompatActivity() {
         super.onDestroy()
         instance = null
     }
+
+    private fun isAppInstalled(packageName: String): Boolean {
+        return try {
+            packageManager.getPackageInfo(packageName, 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+    private fun isAppInstalledForUPI(): Boolean {
+        val upiApps = listOf("net.one97.paytm", "com.phonepe.app", "com.google.android.apps.nbu.paisa.user") // Add more UPI app package names if needed
+        for (app in upiApps) {
+            if (isAppInstalled(app)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun openInPlayStore(packageName: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+        startActivity(intent)
+    }
+
+    private fun openInExternalBrowser(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
+    }
+
+    private fun showNoSupportedAppsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("No Supported Apps Installed")
+            .setMessage("Your phone doesn't have any supported UPI apps installed.")
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+    }
+
+
+    private fun handleDeepLink(url: String): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+        return try {
+            when {
+                url.startsWith("paytmmp://") -> {
+                    if (isAppInstalled("net.one97.paytm")) {
+                        startActivity(intent)
+                    } else {
+                        openInPlayStore("net.one97.paytm")
+                    }
+                }
+                url.startsWith("phonepe://") -> {
+                    if (isAppInstalled("com.phonepe.app")) {
+                        startActivity(intent)
+                    } else {
+                        openInPlayStore("com.phonepe.app")
+                    }
+                }
+                url.startsWith("upi://") -> {
+
+                    // For other UPI links, you can add additional app checks if needed
+                    if (isAppInstalledForUPI()) {
+                        startActivity(intent)
+                    } else {
+                        showNoSupportedAppsDialog()
+                    }
+                }
+
+            }
+            Log.d("tabs1_request", "other true")
+
+            false
+        } catch (e: ActivityNotFoundException) {
+            Log.d("tabs1_request", "other openInExternal")
+
+            openInExternalBrowser(url)
+            false
+        }
+    }
+
 
 }

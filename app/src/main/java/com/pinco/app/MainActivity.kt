@@ -3,6 +3,7 @@ package com.pinco.app
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.onesignal.OneSignal
 import com.pinco.app.views.PreLoaderActivity
@@ -15,14 +16,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         OneSignal.initWithContext(this)
-        OneSignal.setAppId("3c5c3baf-e425-4935-b308-da7dc1c3c3c6")
+        OneSignal.setAppId("9709c6bb-071d-455a-9d79-142dfb23ff7d")
 
+        val handler = Handler()
 
-
+        handler.postDelayed({
             startActivity(
                 Intent(this@MainActivity, PreLoaderActivity::class.java)
             )
             finish()
+        }, 400)
+
         }
 
 

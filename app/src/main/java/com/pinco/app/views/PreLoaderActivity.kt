@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.pinco.app.R
+import com.pinco.app.common.Configurator.Companion.mainURL
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,32 +61,14 @@ class PreLoaderActivity : AppCompatActivity() {
 
 
             lifecycleScope.launch(Dispatchers.IO) {
-//                apps().collect {
+                    startActivity(
+                        Intent(this@PreLoaderActivity, WebViewActivity::class.java).putExtra(
+                            "url",
+                            mainURL,
+                        ).putExtra("data", "pin-up, pinlinkgogo".split(",").toTypedArray()
+                        ))
+                    finish()
 
-
-
-                    Log.d("dataFlow", "conversion2:  " )
-
-                    firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener { aVoid: Boolean? ->
-                        Log.d("tags2", FirebaseRemoteConfig.getInstance().getString("url"))
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            Log.d("dataFlow", "conversion3:  " + FirebaseRemoteConfig.getInstance()
-                                .getString("url"))
-
-                            Log.d("dataFlow", "conversion4:  " + FirebaseRemoteConfig.getInstance()
-                                .getString("data").split(",").toTypedArray().get(0))
-
-                        startActivity(
-                            Intent(this@PreLoaderActivity, WebViewActivity::class.java).putExtra(
-                                "url",
-                                FirebaseRemoteConfig.getInstance()
-                                    .getString("url"),
-                            ).putExtra("data", FirebaseRemoteConfig.getInstance().getString("data").split(",").toTypedArray()
-                            ))
-                            finish()
-                        }
-
-                }
             }
 
 
