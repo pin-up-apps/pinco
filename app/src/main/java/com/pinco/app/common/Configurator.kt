@@ -121,8 +121,4 @@ class Configurator(
             return chrome.onShowFileChooser(webView, filePathCallback, fileChooserParams)
         }
     }
-
-    companion object {
-        const val mainURL: String = ""
-    }
 }
