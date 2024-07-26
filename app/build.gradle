@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.pinco.app'
+    namespace 'com.pinco.app.template'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.pinco.app"
+        applicationId "com.pinco.app.template"
         minSdk 28
         targetSdk 34
         versionCode 1

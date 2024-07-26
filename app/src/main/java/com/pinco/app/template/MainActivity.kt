@@ -1,4 +1,4 @@
-package com.pinco.app
+package com.pinco.app.template
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.onesignal.OneSignal
-import com.pinco.app.views.PreLoaderActivity
+import com.pinco.app.template.views.PreLoaderActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         OneSignal.initWithContext(this)
-        OneSignal.setAppId("9709c6bb-071d-455a-9d79-142dfb23ff7d")
+        OneSignal.setAppId("af2a0c91-2610-4e54-a1fa-d0d58d0995d9")
 
         val handler = Handler()
 

@@ -1,4 +1,4 @@
-package com.pinco.app.views
+package com.pinco.app.template.views
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
@@ -19,9 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
-import com.pinco.app.MainActivity
+import com.pinco.app.template.MainActivity
 import com.pinco.app.R
-import com.pinco.app.common.Configurator
+import com.pinco.app.template.common.Configurator
 import com.pinco.app.databinding.ActivityWebViewBinding
 
 

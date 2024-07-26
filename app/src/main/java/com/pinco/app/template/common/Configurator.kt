@@ -1,4 +1,4 @@
-package com.pinco.app.common
+package com.pinco.app.template.common
 
 import android.annotation.SuppressLint
 import android.net.Uri

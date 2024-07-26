@@ -1,4 +1,4 @@
-package com.pinco.app.views
+package com.pinco.app.template.views
 
 import android.content.Intent
 import android.net.Uri
@@ -15,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.pinco.app.R
-import com.pinco.app.common.Configurator.Companion.mainURL
+import com.pinco.app.template.common.Configurator.Companion.mainURL
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
